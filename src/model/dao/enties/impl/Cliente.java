@@ -76,6 +76,15 @@ public class Cliente extends Usuario{
 		}
 		throw new IllegalArgumentException("Conta não encontrada!" + numeroConta);
 	}
+	
+	public boolean sacar(int numeroConta, double valor) {
+		for (Conta conta : contas) {
+			if (conta.getNumero().equals(numeroConta)) {
+				conta.sacar(valor);
+			}
+		}
+		throw new IllegalArgumentException("Conta não encontrada!" + numeroConta);
+	}
 
 	@Override
 	public int hashCode() {

@@ -9,15 +9,18 @@ public abstract class Usuario {
 	private LocalDate dataDeNascimento;
 	private String telefone;
 	
+	private Endereco endereco;
+	
 	public Usuario() {
 	}
 
-	public Usuario(Integer id, String nome, LocalDate dataDeNascimento, String telefone) {
+	public Usuario(Integer id, String nome, LocalDate dataDeNascimento, String telefone, Integer idEndereco,String cep, String local, Integer numeroCasa, String bairro, String cidade, String estado) {
 		super();
 		this.setId(id);
 		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
 		this.telefone = telefone;
+		this.endereco = new Endereco(idEndereco, cep, local, numeroCasa, bairro, cidade, estado);
 	}
 	
 	public Integer getId() {
@@ -50,6 +53,14 @@ public abstract class Usuario {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Endereco getEndereco() { 
+		return endereco; 
+	}
+	
+	public void setEndereco(Integer idEndereco, String cep, String local, Integer numeroCasa, String bairro, String cidade, String estado) { 
+		this.endereco = new Endereco(idEndereco, cep, local, numeroCasa, bairro, cidade, estado); 
 	}
 
 	public abstract Boolean login(String senha);
