@@ -85,6 +85,15 @@ public class Cliente extends Usuario{
 		}
 		throw new IllegalArgumentException("Conta não encontrada!" + numeroConta);
 	}
+	
+	/*---------------------------PAREI AQUI-----------------------------------------*/
+	public String consultaExtrato() {
+		return String.format("teste");
+	}
+	
+	public Double consultarLimite() {
+		return 0.0;
+	}
 
 	@Override
 	public int hashCode() {

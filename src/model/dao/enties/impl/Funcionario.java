@@ -3,6 +3,7 @@ package model.dao.enties.impl;
 import java.io.Serializable;
 import java.util.Objects;
 
+import model.dao.enties.Conta;
 import model.dao.enties.Usuario;
 
 public class Funcionario extends Usuario implements Serializable{
@@ -64,7 +65,9 @@ public class Funcionario extends Usuario implements Serializable{
 		return null;
 	}
 	
-	
+	/*---------------------------PAREI AQUI-----------------------------------------*/
+	public void abrirConta(Conta conta) {
+	}
 
 	@Override
 	public int hashCode() {
