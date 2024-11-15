@@ -1,6 +1,7 @@
 package model.dao.enties.impl;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import model.dao.enties.Conta;
@@ -77,8 +78,26 @@ public class Funcionario extends Usuario implements Serializable{
 		return super.toString() + "\n Codigo: " + codigoFuncionario + "\nCargo: " + cargo;
 	}
 	
-	/*---------------------------PAREI AQUI-----------------------------------------*/
-	public void abrirConta(Conta conta) {
+	public void abrirConta(Conta conta, Cliente cliente) {
+		if (conta != null && cliente != null) {
+			cliente.adicionarConta(conta);
+			System.out.println("Conta do tipo " + conta.getClass().getSimpleName() + " aberta para o cliente " + cliente.getNome() + ".");
+		} else {
+			System.out.println("Dados invalidos para abertura de conta.");
+		}
+	}
+	
+	public void encerarConta(Conta conta, Cliente cliente) {
+		if (conta != null && cliente != null) {
+			List<Conta> contas = cliente.getContas();
+			if (contas.remove(conta)) {
+				System.out.println("Conta do tipo " + conta.getClass().getSimpleName() + "encerrado para o cliente " + cliente.getNome() + ".");
+			} else {
+				System.out.println("A conta não foi encontrada para o cliente " + cliente.getNome() + ".");
+			}
+		} else {
+			System.out.println("Dados invalidos para encerar a conta.");
+		}
 	}
 
 	@Override
