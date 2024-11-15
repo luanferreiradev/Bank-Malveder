@@ -52,4 +52,9 @@ public class ClientePF extends Cliente{
 		}
 		return false;
 	}
+	
+	@Override
+	public String consultarDados() {
+		return super.toString() + "\nCPF: " + cpf;
+	}
 }

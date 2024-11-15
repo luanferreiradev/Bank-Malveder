@@ -52,4 +52,9 @@ public class ClientePJ extends Cliente{
 		}
 		return false;
 	}
+	
+	@Override
+	public String consultarDados() {
+		return super.toString() + "\nCNPJ: " + cnpj;
+	}
 }

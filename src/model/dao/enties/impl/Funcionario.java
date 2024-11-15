@@ -74,8 +74,7 @@ public class Funcionario extends Usuario implements Serializable{
 
 	@Override
 	public String consultarDados() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.toString() + "\n Codigo: " + codigoFuncionario + "\nCargo: " + cargo;
 	}
 	
 	/*---------------------------PAREI AQUI-----------------------------------------*/

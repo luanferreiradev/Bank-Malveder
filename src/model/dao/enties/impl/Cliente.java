@@ -45,13 +45,7 @@ public class Cliente extends Usuario{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public void logout() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public String consultarDados() {
 		// TODO Auto-generated method stub
@@ -134,5 +128,11 @@ public class Cliente extends Usuario{
 			return false;
 		Cliente other = (Cliente) obj;
 		return Objects.equals(idCliente, other.idCliente);
+	}
+
+	@Override
+	public String toString() {
+		return "Nome: " + getNome() + "\nData de Nascimento: " + getDataDeNascimento() + "\nTelefone: " + getTelefone() +
+				"\nEndereço: " + getEndereco().toString();
 	}
 }
