@@ -11,6 +11,7 @@ public abstract class Conta {
 	private String agencia;
 	private Double saldo = 0.0;
 	
+	private List<String> movimentacoes = new ArrayList<>();
 	private List<Cliente> clientes = new ArrayList<>();
 	
 	public Conta() {
@@ -40,6 +41,7 @@ public abstract class Conta {
 	
 	public void depositar(double valor) {
 		this.saldo += valor;
+		movimentacoes.add("Deposito: " + valor);
 	}
 	
 	public boolean sacar(double valor) {
@@ -47,11 +49,24 @@ public abstract class Conta {
 			return false;
 		} else {
 			this.saldo -= valor;
+			movimentacoes.add("Saque: " + valor);
 			return true;
 		}
 	}
 	
 	public double consultarSaldo() {
 		return saldo;
+	}
+	
+	public void adicionarCliente(Cliente cliente) {
+		this.clientes.add(cliente);
+	}
+	
+	public List<Cliente> getClientes(){
+		return this.clientes;
+	}
+	
+	public List<String> getMovimentacoes(){
+		return movimentacoes;
 	}
 }

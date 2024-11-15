@@ -41,9 +41,9 @@ public class Cliente extends Usuario{
 	}
 
 	@Override
-	public Boolean login(String senha) {
+	public Boolean login(String identificador, String senha) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -56,6 +56,15 @@ public class Cliente extends Usuario{
 	public String consultarDados() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void adicionarConta(Conta conta) {
+		this.contas.add(conta);
+		conta.adicionarCliente(this);
+	}
+	
+	public List<Conta> getContas(){
+		return this.contas;
 	}
 	
 	public double consultarSaldo(int numeroConta) {
@@ -86,13 +95,28 @@ public class Cliente extends Usuario{
 		throw new IllegalArgumentException("Conta não encontrada!" + numeroConta);
 	}
 	
-	/*---------------------------PAREI AQUI-----------------------------------------*/
-	public String consultaExtrato() {
-		return String.format("teste");
+	public String consultaExtrato(int numeroConta) {
+		for (Conta conta : contas) {
+			if (conta.getNumero().equals(numeroConta)) {
+				StringBuilder extrato = new StringBuilder();
+				extrato.append("Extrato da Conta ").append(numeroConta).append(":\n");
+				for (String mov : conta.getMovimentacoes()) {
+					extrato.append(mov).append("\n");
+				}
+				return extrato.toString();
+			}
+		}
+		throw new IllegalArgumentException("Conta não encontrada: " + numeroConta);
 	}
 	
-	public Double consultarLimite() {
-		return 0.0;
+	public Double consultarLimite(int numeroConta) {
+		for (Conta conta : contas) {
+			if (conta.getNumero().equals(numeroConta) && conta instanceof ContaCorrente) {
+				ContaCorrente contaCorrente = (ContaCorrente) conta;
+				return contaCorrente.consultarLimite();
+			}
+		}
+		throw new IllegalArgumentException("Conta não encontrada: " + numeroConta);
 	}
 
 	@Override

@@ -13,14 +13,16 @@ public class Funcionario extends Usuario implements Serializable{
 	private String codigoFuncionario;
 	private String cargo;
 	private String senha;
+	private String documento;
 	
 	public Funcionario() {
 	}
 	
-	public Funcionario(String codigoFuncionario, String cargo) {
+	public Funcionario(String codigoFuncionario, String cargo, String documento) {
 		super();
 		this.codigoFuncionario = codigoFuncionario;
 		this.cargo = cargo;
+		this.documento = documento;
 	}
 	
 	public String getCodigoFuncionario() {
@@ -47,10 +49,21 @@ public class Funcionario extends Usuario implements Serializable{
 		this.senha = senha;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
 	@Override
-	public Boolean login(String senha) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean login(String codigoFuncionario, String senha) {
+		if (this.codigoFuncionario.equals(codigoFuncionario) && this.senha.equals(senha)) {
+			this.setIsLoggedIn(true);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

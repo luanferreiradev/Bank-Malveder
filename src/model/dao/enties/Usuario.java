@@ -11,6 +11,8 @@ public abstract class Usuario {
 	
 	private Endereco endereco;
 	
+	private Boolean isLoggedIn; //estado de login
+	
 	public Usuario() {
 	}
 
@@ -21,6 +23,7 @@ public abstract class Usuario {
 		this.dataDeNascimento = dataDeNascimento;
 		this.telefone = telefone;
 		this.endereco = new Endereco(idEndereco, cep, local, numeroCasa, bairro, cidade, estado);
+		this.isLoggedIn = false; // Inicialmente, o usuário não está logado
 	}
 	
 	public Integer getId() {
@@ -63,9 +66,24 @@ public abstract class Usuario {
 		this.endereco = new Endereco(idEndereco, cep, local, numeroCasa, bairro, cidade, estado); 
 	}
 
-	public abstract Boolean login(String senha);
+	public Boolean getIsLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setIsLoggedIn(Boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	public abstract Boolean login(String identificador ,String senha);
 	
-	public abstract void logout();
+	public void logout() {
+		if (this.isLoggedIn) {
+			this.isLoggedIn = false;
+			System.out.println("Usuário " + this.nome + " foi deslogado com sucesso.");
+		} else {
+			System.out.println("Usuário " + this.nome + " já estava deslogado."); 
+		}
+	}
 	
 	public abstract String consultarDados();
 }
