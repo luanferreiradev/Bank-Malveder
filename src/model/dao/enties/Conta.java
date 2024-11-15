@@ -3,6 +3,7 @@ package model.dao.enties;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.enties.enums.StatusSolicitacao;
 import model.dao.enties.impl.Cliente;
 
 public abstract class Conta {
@@ -13,6 +14,8 @@ public abstract class Conta {
 	
 	private List<String> movimentacoes = new ArrayList<>();
 	private List<Cliente> clientes = new ArrayList<>();
+	
+	private StatusSolicitacao statusSolicitacao = StatusSolicitacao.EM_ANALISE;
 	
 	public Conta() {
 	}
@@ -39,6 +42,14 @@ public abstract class Conta {
 		this.agencia = agencia;
 	}
 	
+	public StatusSolicitacao getStatusSolicitacao() {
+		return statusSolicitacao;
+	}
+
+	public void setStatusSolicitacao(StatusSolicitacao statusSolicitacao) {
+		this.statusSolicitacao = statusSolicitacao;
+	}
+
 	public void depositar(double valor) {
 		this.saldo += valor;
 		movimentacoes.add("Deposito: " + valor);
