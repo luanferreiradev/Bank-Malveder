@@ -14,8 +14,8 @@ public class ContaPoupanca extends Conta implements Serializable{
 	public ContaPoupanca() {
 	}
 
-	public ContaPoupanca(Integer idContaPoupanca, Double taxaDeRendimento) {
-		super();
+	public ContaPoupanca(Integer numero, String agencia, Integer idContaPoupanca, Double taxaDeRendimento) {
+		super(numero, agencia);
 		this.idContaPoupanca = idContaPoupanca;
 		this.taxaDeRendimento = taxaDeRendimento;
 	}

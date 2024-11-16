@@ -16,8 +16,8 @@ public class ContaCorrente extends Conta implements Serializable{
 	public ContaCorrente() {
 	}
 
-	public ContaCorrente(Integer idContaCorrente, Double limite, LocalDate dataVencimento) {
-		super();
+	public ContaCorrente(Integer numero, String agencia, Integer idContaCorrente, Double limite, LocalDate dataVencimento) {
+		super(numero, agencia);
 		this.idContaCorrente = idContaCorrente;
 		this.limite = limite;
 		this.dataVencimento = dataVencimento;

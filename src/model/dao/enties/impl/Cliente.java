@@ -1,5 +1,6 @@
 package model.dao.enties.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +58,21 @@ public class Cliente extends Usuario{
 		conta.adicionarCliente(this);
 	}
 	
+	public Conta criarConta(String tipo, Integer numero, String agencia, Double taxaOuLimite, LocalDate dataVencimento) {
+		Conta novaConta;
+		
+		if ("poupanca".equalsIgnoreCase(tipo)) {
+			novaConta = new ContaPoupanca(numero, agencia, null, taxaOuLimite);
+		} else if ("corrente".equalsIgnoreCase(tipo)) {
+			novaConta = new ContaCorrente(numero, agencia, null, taxaOuLimite, dataVencimento);
+		} else {
+			throw new IllegalArgumentException("Tipo de conta ivalida: " + tipo);
+		}
+		
+		this.adicionarConta(novaConta);
+		return novaConta;
+	}
+	
 	public List<Conta> getContas(){
 		return this.contas;
 	}
@@ -112,7 +128,9 @@ public class Cliente extends Usuario{
 		}
 		throw new IllegalArgumentException("Conta não encontrada: " + numeroConta);
 	}
-
+	
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(idCliente);
