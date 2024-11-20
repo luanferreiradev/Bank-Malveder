@@ -33,7 +33,7 @@ public class Conta {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
     public Long getNumeroConta() {
@@ -85,6 +85,7 @@ public class Conta {
                         novoTipoConta
                 );
                 novaConta.setLimite(1000.0); // Definir limite para conta corrente
+                novaConta.setStatus(Status_Solicitacao.APROVADO); // Aprovar a nova conta
                 // Adicionar outras configurações específicas para conta corrente
             } else if (novoTipoConta.equals("Poupanca")) {
                 ContaPoupanca novaConta = new ContaPoupanca(
@@ -94,6 +95,7 @@ public class Conta {
                         this.cidade,
                         novoTipoConta
                 );
+                novaConta.setStatus(Status_Solicitacao.APROVADO); // Aprovar a nova conta
                 // Adicionar outras configurações específicas para conta poupança
             }
             this.tipoConta = novoTipoConta;

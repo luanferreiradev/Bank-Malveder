@@ -85,11 +85,134 @@ public class Banco {
         Funcionario funcionario = bancoServico.getFuncionario(codigoFuncionario);
         if (funcionario != null && funcionario.login(senha)) {
             funcionarioLogado = funcionario;
-            System.out.println("Login bem-sucedido!");
+            if (codigoFuncionario.equals("0001") && senha.equals("root")) {
+                menuRoot();
+            } else {
+                menuFuncionarioLogado();
+            }
             return true;
         } else {
             System.out.println("Código ou senha inválidos!");
             return false;
+        }
+    }
+
+    private static void menuRoot() {
+        while (true) {
+            System.out.println("Menu Root:");
+            System.out.println("1. Cliente");
+            System.out.println("2. Funcionário");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a nova linha
+
+            switch (opcao) {
+                case 1:
+                    menuClienteRoot();
+                    break;
+                case 2:
+                    menuFuncionarioRoot();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private static void menuClienteRoot() {
+        while (true) {
+            System.out.println("Menu Cliente Root:");
+            System.out.println("1. Criar Cliente");
+            System.out.println("2. Remover Cliente");
+            System.out.println("3. Consultar Dados da Conta");
+            System.out.println("4. Consultar Dados do Cliente");
+            System.out.println("5. Alterar Dados da Conta");
+            System.out.println("6. Alterar Dados do Cliente");
+            System.out.println("7. Aprovar Solicitação");
+            System.out.println("8. Rejeitar Solicitação");
+            System.out.println("9. Listar Solicitações");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a nova linha
+
+            switch (opcao) {
+                case 1:
+                    criarSolicitacao();
+                    break;
+                case 2:
+                    removerCliente();
+                    break;
+                case 3:
+                    consultarDadosConta();
+                    break;
+                case 4:
+                    consultarDadosCliente();
+                    break;
+                case 5:
+                    alterarDadosConta();
+                    break;
+                case 6:
+                    alterarDadosCliente();
+                    break;
+                case 7:
+                    aprovarSolicitacao();
+                    break;
+                case 8:
+                    rejeitarSolicitacao();
+                    break;
+                case 9:
+                    listarSolicitacoes();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private static void menuFuncionarioRoot() {
+        while (true) {
+            System.out.println("Menu Funcionário Root:");
+            System.out.println("1. Gerar Relatório de Movimentação");
+            System.out.println("2. Criar Funcionário");
+            System.out.println("3. Remover Funcionário");
+            System.out.println("4. Consultar Dados do Funcionário");
+            System.out.println("5. Alterar Dados do Funcionário");
+            System.out.println("6. Listar Funcionários");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a nova linha
+
+            switch (opcao) {
+                case 1:
+                    geraRelatorioMovimentacao();
+                    break;
+                case 2:
+                    criarNovoFuncionario();
+                    break;
+                case 3:
+                    removerFuncionario();
+                    break;
+                case 4:
+                    consultarDadosFuncionario();
+                    break;
+                case 5:
+                    alterarDadosFuncionario();
+                    break;
+                case 6:
+                    listarFuncionarios();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Opção inválida!");
+            }
         }
     }
 
@@ -217,28 +340,92 @@ public class Banco {
     }
 
     // Banco.java
-    public static void alterarDadosConta() {
+    private static void alterarDadosConta() {
         System.out.print("Número da conta: ");
         long numeroConta = scanner.nextLong();
         scanner.nextLine(); // Consumir a nova linha
 
         Conta conta = bancoServico.getConta((int) numeroConta);
         if (conta != null) {
-            System.out.println("Selecione o novo tipo de conta:");
-            System.out.println("1. Corrente");
-            System.out.println("2. Poupança");
-            int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a nova linha
-
-            String novoTipoConta = opcao == 1 ? "Corrente" : "Poupança";
-            if (conta.getTipoConta() != null && conta.getTipoConta().equals(novoTipoConta)) {
-                System.out.println("A conta já é do tipo: " + novoTipoConta);
-            } else {
-                bancoServico.alterarTipoConta(conta, novoTipoConta);
-                System.out.println("Tipo de conta alterado para: " + novoTipoConta);
+            if (conta instanceof ContaCorrente) {
+                alterarDadosContaCorrente((ContaCorrente) conta);
+            } else if (conta instanceof ContaPoupanca) {
+                alterarDadosContaPoupanca((ContaPoupanca) conta);
             }
         } else {
             System.out.println("Conta não encontrada!");
+        }
+    }
+
+    private static void alterarDadosContaCorrente(ContaCorrente contaCorrente) {
+        while (true) {
+            System.out.println("Menu de Alteração - Conta Corrente:");
+            System.out.println("1. Alterar Limite da Conta");
+            System.out.println("2. Alterar Data de Vencimento");
+            System.out.println("3. Alterar Tipo de Conta para Poupança");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a nova linha
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Novo Limite: ");
+                    double novoLimite = scanner.nextDouble();
+                    scanner.nextLine(); // Consumir a nova linha
+                    contaCorrente.setLimite(novoLimite);
+                    System.out.println("Limite alterado com sucesso!");
+                    break;
+                case 2:
+                    System.out.print("Nova Data de Vencimento (yyyy-MM-dd): ");
+                    String novaData = scanner.nextLine();
+                    contaCorrente.setDataVencimento(LocalDate.parse(novaData));
+                    System.out.println("Data de vencimento alterada com sucesso!");
+                    break;
+                case 3:
+                    if (contaCorrente.getDivida() == 0) {
+                        bancoServico.alterarTipoConta(contaCorrente, "Poupança");
+                        //System.out.println("Tipo de conta alterado para: Poupança");
+                        return; // Sair do menu após a alteração
+                    } else {
+                        System.out.println("Pendências a serem resolvidas!");
+                    }
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private static void alterarDadosContaPoupanca(ContaPoupanca contaPoupanca) {
+        while (true) {
+            System.out.println("Menu de Alteração - Conta Poupança:");
+            System.out.println("1. Alterar Taxa de Rendimento");
+            System.out.println("2. Alterar Tipo de Conta para Corrente");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a nova linha
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Nova Taxa de Rendimento: ");
+                    double novaTaxa = scanner.nextDouble();
+                    scanner.nextLine(); // Consumir a nova linha
+                    contaPoupanca.setTaxaRendimento(novaTaxa);
+                    System.out.println("Taxa de rendimento alterada com sucesso!");
+                    break;
+                case 2:
+                    bancoServico.alterarTipoConta(contaPoupanca, "Corrente");
+                    //System.out.println("Tipo de conta alterado para: Corrente");
+                    return; // Sair do menu após a alteração
+                case 0:
+                    return;
+                default:
+                    System.out.println("Opção inválida!");
+            }
         }
     }
 
@@ -327,13 +514,13 @@ public class Banco {
 
         if (funcionarioLogado != null) {
             funcionarioLogado.cadastrarUmFuncionario(nome, dataDeNascimento, telefone, senha, cep, local, numeroCasa, bairro, cidade, estado, codigoFuncionario, cargo);
-            System.out.println("Funcionário cadastrado com sucesso.");
+            System.out.println("Funcionário cadastrado com sucesso. Código do Funcionário: " + codigoFuncionario);
         } else {
             System.out.println("Nenhum funcionário logado.");
         }
     }
 
-    public static void geraRelatorioMovimentacao() {
+    private static void geraRelatorioMovimentacao() {
         System.out.print("Número da conta: ");
         int numeroConta = scanner.nextInt();
         scanner.nextLine(); // Consumir a nova linha
@@ -341,21 +528,25 @@ public class Banco {
         if (funcionarioLogado != null) {
             Conta conta = bancoServico.getConta(numeroConta);
             if (conta != null) {
-                Cliente cliente = conta.getCliente();
-                String nomeUsuario = cliente.getNome();
+                Cliente cliente = bancoServico.getCliente(conta.getCliente().getDocumento());
+                String nomeUsuario = cliente != null ? cliente.getNome() : "Desconhecido";
                 String tipoConta = conta instanceof ContaCorrente ? "Corrente" : "Poupança";
 
                 List<String> dados = new ArrayList<>();
+                for (Transacao transacao : conta.consultarExtrato()) {
+                    dados.add("Data: " + transacao.getDataHora() + ", Tipo: " + transacao.getTipo() + ", Valor: " + transacao.getValor());
+                }
+
                 Relatorio relatorio = new Relatorio("Movimentações da Conta", dados, nomeUsuario, tipoConta);
-                relatorio.gerarRelatorioGeral(conta);
                 funcionarioLogado.getRelatorios().add(relatorio);
 
                 System.out.println(relatorio.toString());
                 System.out.println("Deseja exportar o relatório para Excel? (sim/não)");
                 String resposta = scanner.nextLine();
                 if (resposta.equalsIgnoreCase("sim")) {
-                    System.out.print("Caminho do arquivo: ");
-                    String filePath = scanner.nextLine();
+                    System.out.print("Diretório para salvar o arquivo: ");
+                    String diretorio = scanner.nextLine();
+                    String filePath = diretorio + "/relatorio.xls";
                     try {
                         relatorio.exportarParaExcel(filePath);
                         System.out.println("Relatório exportado com sucesso.");
@@ -398,6 +589,8 @@ public class Banco {
         }
     }
 
+    private static Cliente clienteLogado;
+
     // Banco.java
     private static boolean loginCliente() {
         System.out.print("Documento do Cliente: ");
@@ -409,6 +602,7 @@ public class Banco {
         if (cliente != null && cliente.login(senha)) {
             Conta conta = bancoServico.getContaPorCliente(cliente);
             if (conta != null && conta.getStatus().equals(Status_Solicitacao.APROVADO)) {
+                clienteLogado = cliente; // Definir o cliente logado
                 System.out.println("Login bem-sucedido!");
                 return true;
             } else {
@@ -429,7 +623,12 @@ public class Banco {
             System.out.println("2. Depositar Valor");
             System.out.println("3. Sacar Valor");
             System.out.println("4. Consultar Extrato");
-            System.out.println("5. Consultar Limite");
+            Conta conta = bancoServico.getContaPorCliente(clienteLogado);
+            if (conta instanceof ContaCorrente) {
+                System.out.println("5. Consultar Limite");
+            } else if (conta instanceof ContaPoupanca) {
+                System.out.println("5. Consultar Taxa de Rendimento");
+            }
             System.out.println("6. Transferir Valor");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
@@ -450,7 +649,11 @@ public class Banco {
                     consultarExtrato();
                     break;
                 case 5:
-                    consultarLimite();
+                    if (conta instanceof ContaCorrente) {
+                        consultarLimite();
+                    } else if (conta instanceof ContaPoupanca) {
+                        consultarTaxaRendimento();
+                    }
                     break;
                 case 6:
                     transferirValor();
@@ -460,6 +663,21 @@ public class Banco {
                 default:
                     System.out.println("Opção inválida!");
             }
+        }
+    }
+
+    private static void consultarTaxaRendimento() {
+        System.out.print("Número da conta: ");
+        long numeroConta = scanner.nextLong();
+        scanner.nextLine(); // Consumir a nova linha
+
+        Conta conta = bancoServico.getConta((int) numeroConta);
+        if (conta != null && conta instanceof ContaPoupanca) {
+            ContaPoupanca contaPoupanca = (ContaPoupanca) conta;
+            double taxaRendimento = contaPoupanca.getTaxaRendimento();
+            System.out.println("Taxa de Rendimento Mensal: " + ((taxaRendimento * 100) / 12) + "%");
+        } else {
+            System.out.println("Conta não encontrada ou não é uma conta poupança!");
         }
     }
 
@@ -474,7 +692,7 @@ public class Banco {
             System.out.println("Saldo: " + conta.consultaSaldo());
             if (conta instanceof ContaCorrente) {
                 ContaCorrente contaCorrente = (ContaCorrente) conta;
-                System.out.println("Dívida: " + (contaCorrente.consultaSaldo() < 0 ? -contaCorrente.consultaSaldo() : 0));
+                System.out.println("Dívida: " + contaCorrente.getDivida());
             }
         } else {
             System.out.println("Conta não encontrada!");
@@ -628,5 +846,88 @@ public class Banco {
 
         bancoServico.rejeitarSolicitacao(idSolicitacao);
         System.out.println("Solicitação rejeitada!");
+    }
+
+    private static void removerCliente() {
+        System.out.print("Documento do cliente: ");
+        String documento = scanner.nextLine();
+        Cliente cliente = bancoServico.getCliente(documento);
+        if (cliente != null) {
+            bancoServico.removerCliente(cliente);
+            System.out.println("Cliente removido com sucesso!");
+        } else {
+            System.out.println("Cliente não encontrado.");
+        }
+    }
+
+    private static void removerFuncionario() {
+        System.out.print("Código do Funcionário: ");
+        String codigoFuncionario = scanner.nextLine();
+        bancoServico.removerFuncionario(codigoFuncionario);
+        System.out.println("Funcionário removido com sucesso!");
+    }
+
+    private static void consultarDadosFuncionario() {
+        System.out.print("Código do Funcionário: ");
+        String codigoFuncionario = scanner.nextLine();
+        Funcionario funcionario = bancoServico.getFuncionario(codigoFuncionario);
+        if (funcionario != null) {
+            System.out.println("Nome: " + funcionario.getNome());
+            System.out.println("Telefone: " + funcionario.getTelefone());
+            System.out.println("Cidade: " + funcionario.getCidade());
+            System.out.println("Estado: " + funcionario.getEstado());
+            System.out.println("Data de Nascimento: " + funcionario.getDataDeNascimento());
+            System.out.println("Cargo: " + funcionario.getCargo());
+        } else {
+            System.out.println("Funcionário não encontrado.");
+        }
+    }
+
+    private static void alterarDadosFuncionario() {
+        System.out.print("Código do Funcionário: ");
+        String codigoFuncionario = scanner.nextLine();
+        Funcionario funcionario = bancoServico.getFuncionario(codigoFuncionario);
+        if (funcionario == null) {
+            System.out.println("Funcionário não encontrado.");
+            return;
+        }
+
+        System.out.print("Novo nome: ");
+        String novoNome = scanner.nextLine();
+        System.out.print("Novo telefone: ");
+        String novoTelefone = scanner.nextLine();
+        System.out.print("Nova senha: ");
+        String novaSenha = scanner.nextLine();
+        System.out.print("Novo CEP: ");
+        String novoCep = scanner.nextLine();
+        System.out.print("Novo local: ");
+        String novoLocal = scanner.nextLine();
+        System.out.print("Novo bairro: ");
+        String novoBairro = scanner.nextLine();
+        System.out.print("Nova cidade: ");
+        String novaCidade = scanner.nextLine();
+        System.out.print("Novo estado: ");
+        String novoEstado = scanner.nextLine();
+        System.out.print("Nova data de nascimento (dd/MM/yyyy): ");
+        String dataNascimentoStr = scanner.nextLine();
+        System.out.print("Número da Casa: ");
+        String numeroCasa = scanner.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate novaDataNascimento;
+        try {
+            novaDataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de data inválido. Use dd/MM/yyyy.");
+            return;
+        }
+
+        bancoServico.alterarDadosFuncionario(codigoFuncionario, novoNome, novoTelefone, novaSenha, novoCep, novoLocal, novoBairro, novaCidade, novoEstado, novaDataNascimento, numeroCasa);
+        System.out.println("Dados do funcionário alterados com sucesso!");
+    }
+
+    private static void listarFuncionarios() {
+        List<String> funcionarios = bancoServico.listarFuncionarios();
+        funcionarios.forEach(System.out::println);
     }
 }

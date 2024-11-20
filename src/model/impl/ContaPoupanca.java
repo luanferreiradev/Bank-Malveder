@@ -6,16 +6,25 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class ContaPoupanca extends Conta {
-    private static final Double TAXA_RENDIMENTO = 0.01;
     private Double taxaRendimento;
 
     public ContaPoupanca(Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
         super(cliente, numeroConta, endereco, cidade, tipoConta);
-        this.taxaRendimento = TAXA_RENDIMENTO;
+        this.taxaRendimento = 0.10;
     }
 
     public Double getTaxaRendimento() {
         return taxaRendimento;
+    }
+
+    public void setTaxaRendimento(Double taxaRendimento) {
+        this.taxaRendimento = taxaRendimento;
+    }
+
+    @Override
+    public Double consultaSaldo() {
+        calcularRendimento();
+        return super.consultaSaldo();
     }
 
     public Double calcularRendimento() {
@@ -24,9 +33,10 @@ public class ContaPoupanca extends Conta {
         long meses = ChronoUnit.MONTHS.between(dataAbertura, dataAtual);
 
         if (meses >= 1) {
-            return super.consultaSaldo() * TAXA_RENDIMENTO;
+            Double rendimento = super.consultaSaldo() * (taxaRendimento / 12);
+            super.deposito(rendimento);
+            return rendimento;
         } else {
-            System.out.println("Rendimento só pode ser calculado após um mês.");
             return 0.0;
         }
     }

@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 
 public class ContaCorrente extends Conta {
     private Double limite;
+    private Double divida;
     private LocalDate dataDeVencimento;
 
     public ContaCorrente(Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
         super(cliente, numeroConta, endereco, cidade, tipoConta);
         this.limite = 1000.0;
+        this.divida = 0.0;
         this.dataDeVencimento = LocalDate.now().plusMonths(1);
     }
 
@@ -26,8 +28,20 @@ public class ContaCorrente extends Conta {
         return dataDeVencimento;
     }
 
+    public void setDataVencimento(LocalDate dataDeVencimento) {
+        this.dataDeVencimento = dataDeVencimento;
+    }
+
     public void setLimite(Double limite) {
         this.limite = limite;
+    }
+
+    public Double getDivida() {
+        return divida;
+    }
+
+    public void setDivida(Double divida) {
+        this.divida = divida;
     }
 
     @Override
@@ -36,8 +50,8 @@ public class ContaCorrente extends Conta {
             if (valor > saldo) {
                 double diferenca = valor - saldo;
                 saldo = 0.0;
+                divida += diferenca;
                 limite -= diferenca;
-                saldo -= diferenca; // Saldo fica negativo
             } else {
                 saldo -= valor;
             }

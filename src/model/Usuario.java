@@ -69,6 +69,49 @@ public abstract class Usuario {
         this.endereco = endereco;
     }
 
+    public void setCep(String cep) {
+        this.endereco.setCep(cep);
+    }
+
+    public void setLocal(String local) {
+        this.endereco.setLocal(local);
+    }
+
+    public void setBairro(String bairro) {
+        this.endereco.setBairro(bairro);
+    }
+
+    public void setCidade(String cidade) {
+        this.endereco.setCidade(cidade);
+    }
+
+    public void setEstado(String estado) {
+        this.endereco.setEstado(estado);
+    }
+
+    public String getCep() {
+        return this.endereco.getCep();
+    }
+
+    public String getLocal() {
+        return this.endereco.getLocal();
+    }
+
+    public String getBairro() {
+        return this.endereco.getBairro();
+    }
+
+    public String getCidade() {
+        return this.endereco.getCidade();
+    }
+
+    public String getEstado() {
+        return this.endereco.getEstado();
+    }
+
+
+
+
     public abstract Boolean login(String senha);
     public abstract void logout();
     public abstract String consultarDados();

@@ -182,7 +182,6 @@ public class Funcionario extends Usuario {
     }
 
 
-
     @Override
     public Boolean login(String senha) {
         return this.getSenha().equals(senha);

@@ -121,12 +121,32 @@ public class BancoServico extends Usuario {
     }
 
     public void alterarTipoConta(Conta conta, String novoTipoConta) {
-        if (novoTipoConta.equals("Corrente")) {
-            ContaCorrente novaConta = new ContaCorrente(conta.getCliente(), conta.getNumeroConta(), conta.getEndereco(), conta.getCidade(), novoTipoConta);
-            contas.put(conta.getNumeroConta(), novaConta);
-        } else if (novoTipoConta.equals("Poupança")) {
-            ContaPoupanca novaConta = new ContaPoupanca(conta.getCliente(), conta.getNumeroConta(), conta.getEndereco(), conta.getCidade(), novoTipoConta);
-            contas.put(conta.getNumeroConta(), novaConta);
+        if (!conta.getTipoConta().equals(novoTipoConta)) {
+            Conta novaConta;
+            if (novoTipoConta.equals("Corrente")) {
+                novaConta = new ContaCorrente(
+                        conta.getCliente(),
+                        conta.getNumeroConta(),
+                        conta.getEndereco(),
+                        conta.getCidade(),
+                        novoTipoConta
+                );
+                ((ContaCorrente) novaConta).setLimite(1000.0); // Definir limite para conta corrente
+            } else {
+                novaConta = new ContaPoupanca(
+                        conta.getCliente(),
+                        conta.getNumeroConta(),
+                        conta.getEndereco(),
+                        conta.getCidade(),
+                        novoTipoConta
+                );
+            }
+            novaConta.setStatus(Status_Solicitacao.APROVADO); // Aprovar a nova conta
+            removerConta(conta); // Remover a conta antiga
+            adicionarConta(novaConta); // Adicionar a nova conta
+            System.out.println("Tipo de conta alterado para: " + novoTipoConta);
+        } else {
+            System.out.println("A conta já é do tipo: " + novoTipoConta);
         }
     }
 
@@ -161,7 +181,9 @@ public class BancoServico extends Usuario {
     }
 
     public void removerConta(Conta conta) {
+        Cliente cliente = conta.getCliente();
         contas.values().removeIf(c -> c.equals(conta));
+        removerCliente(cliente);
     }
 
     public Cliente getCliente(String documento) {
@@ -196,6 +218,33 @@ public class BancoServico extends Usuario {
                 .filter(conta -> conta.getCliente().getDocumento().equals(cliente.getDocumento()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void removerFuncionario(String codigoFuncionario) {
+        funcionarios.remove(codigoFuncionario);
+    }
+
+    public List<String> listarFuncionarios() {
+        List<String> listaFuncionarios = new ArrayList<>();
+        for (Funcionario funcionario : funcionarios.values()) {
+            listaFuncionarios.add("Nome: " + funcionario.getNome() + ", Código: " + funcionario.getCodigoFuncionario() + ", Cargo: " + funcionario.getCargo());
+        }
+        return listaFuncionarios;
+    }
+
+    public void alterarDadosFuncionario(String codigoFuncionario, String novoNome, String novoTelefone, String novaSenha, String novoCep, String novoLocal, String novoBairro, String novaCidade, String novoEstado, LocalDate novaDataNascimento, String numeroCasa) {
+        Funcionario funcionario = getFuncionario(codigoFuncionario);
+        if (funcionario != null) {
+            funcionario.setNome(novoNome);
+            funcionario.setTelefone(novoTelefone);
+            funcionario.setSenha(novaSenha);
+            funcionario.setCep(novoCep);
+            funcionario.setLocal(novoLocal);
+            funcionario.setBairro(novoBairro);
+            funcionario.setCidade(novaCidade);
+            funcionario.setEstado(novoEstado);
+            funcionario.setDataDeNascimento(novaDataNascimento);
+        }
     }
 
     @Override
