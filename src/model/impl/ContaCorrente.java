@@ -13,11 +13,12 @@ public class ContaCorrente extends Conta {
     private Double divida;
     private LocalDate dataDeVencimento;
 
-    public ContaCorrente(Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
+    public ContaCorrente(Long idCliente, Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
         super(cliente, numeroConta, endereco, cidade, tipoConta);
         this.limite = 1000.0;
         this.divida = 0.0;
         this.dataDeVencimento = LocalDate.now().plusMonths(1);
+        setCliente(cliente);
     }
 
     public Double consultarLimite() {

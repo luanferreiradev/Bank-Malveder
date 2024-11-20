@@ -8,9 +8,10 @@ import java.time.temporal.ChronoUnit;
 public class ContaPoupanca extends Conta {
     private Double taxaRendimento;
 
-    public ContaPoupanca(Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
+    public ContaPoupanca(Long idCliente, Cliente cliente, Long numeroConta, String endereco, String cidade, String tipoConta) {
         super(cliente, numeroConta, endereco, cidade, tipoConta);
         this.taxaRendimento = 0.10;
+        setCliente(cliente);
     }
 
     public Double getTaxaRendimento() {

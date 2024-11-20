@@ -78,6 +78,7 @@ public class Conta {
         if (!this.tipoConta.equals(novoTipoConta)) {
             if (novoTipoConta.equals("Corrente")) {
                 ContaCorrente novaConta = new ContaCorrente(
+                        this.cliente.getId(), // Adiciona o idCliente
                         this.cliente,
                         this.numeroConta,
                         this.endereco,
@@ -89,6 +90,7 @@ public class Conta {
                 // Adicionar outras configurações específicas para conta corrente
             } else if (novoTipoConta.equals("Poupanca")) {
                 ContaPoupanca novaConta = new ContaPoupanca(
+                        this.cliente.getId(), // Adiciona o idCliente
                         this.cliente,
                         this.numeroConta,
                         this.endereco,
@@ -140,7 +142,15 @@ public class Conta {
         return endereco;
     }
 
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
     public String getCidade() {
         return cidade;
+    }
+
+    protected void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
