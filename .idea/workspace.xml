@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f29d7065-ffea-4d92-940b-639d2129efc4" name="Changes" comment="mundanças estruturais">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Banco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Banco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Conta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Conta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Funcionario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Relatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Relatorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/impl/ContaCorrente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/impl/ContaCorrente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/impl/ContaPoupanca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/impl/ContaPoupanca.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/service/BancoServico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/service/BancoServico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/service/Transacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/service/Transacao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Banco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Banco.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Conta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Conta.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Funcionario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Funcionario.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/impl/ContaCorrente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/impl/ContaCorrente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/impl/ContaPoupanca.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/impl/ContaPoupanca.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/service/BancoServico.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/service/BancoServico.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +70,8 @@
       <workItem from="1732111888774" duration="1617000" />
       <workItem from="1732113652581" duration="1171000" />
       <workItem from="1732114977151" duration="1430000" />
-      <workItem from="1732116422591" duration="8287000" />
+      <workItem from="1732116422591" duration="9341000" />
+      <workItem from="1732130174101" duration="552000" />
     </task>
     <task id="LOCAL-00001" summary="mundanças estruturais">
       <option name="closed" value="true" />
