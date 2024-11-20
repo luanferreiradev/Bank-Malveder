@@ -398,6 +398,7 @@ public class Banco {
         }
     }
 
+    // Banco.java
     private static boolean loginCliente() {
         System.out.print("Documento do Cliente: ");
         String documento = scanner.nextLine();
@@ -406,13 +407,20 @@ public class Banco {
 
         Cliente cliente = bancoServico.getCliente(documento);
         if (cliente != null && cliente.login(senha)) {
-            System.out.println("Login bem-sucedido!");
-            return true;
+            Conta conta = bancoServico.getContaPorCliente(cliente);
+            if (conta != null && conta.getStatus().equals(Status_Solicitacao.APROVADO)) {
+                System.out.println("Login bem-sucedido!");
+                return true;
+            } else {
+                System.out.println("Conta não aprovada ou não encontrada!");
+                return false;
+            }
         } else {
             System.out.println("Documento ou senha inválidos!");
             return false;
         }
     }
+
 
     private static void menuClienteLogado() {
         while (true) {
@@ -464,6 +472,10 @@ public class Banco {
         Conta conta = bancoServico.getConta((int) numeroConta);
         if (conta != null) {
             System.out.println("Saldo: " + conta.consultaSaldo());
+            if (conta instanceof ContaCorrente) {
+                ContaCorrente contaCorrente = (ContaCorrente) conta;
+                System.out.println("Dívida: " + (contaCorrente.consultaSaldo() < 0 ? -contaCorrente.consultaSaldo() : 0));
+            }
         } else {
             System.out.println("Conta não encontrada!");
         }
@@ -496,6 +508,11 @@ public class Banco {
         if (conta != null) {
             Status_Solicitacao status = conta.saque(valor);
             System.out.println("Status do saque: " + status);
+            if (conta instanceof ContaCorrente) {
+                ContaCorrente contaCorrente = (ContaCorrente) conta;
+                System.out.println("Novo saldo: " + contaCorrente.consultaSaldo());
+                System.out.println("Novo limite: " + contaCorrente.consultarLimite());
+            }
         } else {
             System.out.println("Conta não encontrada!");
         }
@@ -522,7 +539,12 @@ public class Banco {
 
         Conta conta = bancoServico.getConta((int) numeroConta);
         if (conta != null) {
-            System.out.println("Limite: " + conta.consultarLimite());
+            if (conta instanceof ContaCorrente) {
+                ContaCorrente contaCorrente = (ContaCorrente) conta;
+                System.out.println("Limite: " + contaCorrente.consultarLimite());
+            } else {
+                System.out.println("Esta conta não possui limite.");
+            }
         } else {
             System.out.println("Conta não encontrada!");
         }

@@ -2,7 +2,11 @@ package model.impl;
 
 import model.Cliente;
 import model.Conta;
+import model.enums.Status_Solicitacao;
+import model.service.Transacao;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ContaCorrente extends Conta {
     private Double limite;
@@ -20,5 +24,32 @@ public class ContaCorrente extends Conta {
 
     public LocalDate getDataVencimento() {
         return dataDeVencimento;
+    }
+
+    public void setLimite(Double limite) {
+        this.limite = limite;
+    }
+
+    @Override
+    public Status_Solicitacao saque(Double valor) {
+        if (valor <= saldo + limite) {
+            if (valor > saldo) {
+                double diferenca = valor - saldo;
+                saldo = 0.0;
+                limite -= diferenca;
+                saldo -= diferenca; // Saldo fica negativo
+            } else {
+                saldo -= valor;
+            }
+            adicionarTransacao(new Transacao(LocalDateTime.now(), "Saque", valor));
+            return Status_Solicitacao.APROVADO;
+        } else {
+            return Status_Solicitacao.REPROVADO;
+        }
+    }
+
+    @Override
+    public Double consultaSaldo() {
+        return saldo;
     }
 }

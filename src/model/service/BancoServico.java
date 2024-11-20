@@ -59,29 +59,50 @@ public class BancoServico extends Usuario {
     }
 
     // BancoServico.java
-    // BancoServico.java
     public void aprovarSolicitacao(int idSolicitacao) {
-        Solicitacao solicitacao = solicitacoes.get(idSolicitacao);
-        if (solicitacao == null) {
-            throw new IllegalArgumentException("Solicitação não encontrada");
+        Solicitacao solicitacao = solicitacoes.values().stream()
+                .filter(s -> s.getId() == idSolicitacao)
+                .findFirst()
+                .orElse(null);
+        if (solicitacao != null) {
+            solicitacao.setStatus(Status_Solicitacao.APROVADO);
+            Cliente cliente = new Cliente(
+                    solicitacao.getDocumento(),
+                    solicitacao.getSenha(),
+                    true, // ou false, dependendo do tipo de cliente
+                    solicitacao.getEndereco(),
+                    solicitacao.getNumeroCasa(),
+                    solicitacao.getBairro(),
+                    solicitacao.getCidade(),
+                    solicitacao.getEstado(),
+                    solicitacao.getDataNascimento(),
+                    solicitacao.getNome(),
+                    solicitacao.getTelefone()
+            );
+            Conta novaConta;
+            if (solicitacao.getTipoConta().equals("Corrente")) {
+                novaConta = new ContaCorrente(
+                        cliente,
+                        solicitacao.getNumeroConta(),
+                        solicitacao.getEndereco(),
+                        solicitacao.getCidade(),
+                        "Corrente"
+                );
+            } else {
+                novaConta = new ContaPoupanca(
+                        cliente,
+                        solicitacao.getNumeroConta(),
+                        solicitacao.getEndereco(),
+                        solicitacao.getCidade(),
+                        "Poupança"
+                );
+            }
+            novaConta.setStatus(Status_Solicitacao.APROVADO); // Certifique-se de definir o status da conta como APROVADO
+            contas.put(novaConta.getNumeroConta(), novaConta);
         }
-
-        Cliente cliente = clientes.get(solicitacao.getDocumento());
-        if (cliente == null) {
-            throw new IllegalArgumentException("Cliente não encontrado");
-        }
-
-        // Aprovar a solicitação e criar a conta
-        Conta conta;
-        if (solicitacao.getTipoConta().equals("Corrente")) {
-            conta = new ContaCorrente(cliente, solicitacao.getNumeroConta(), solicitacao.getEndereco(), solicitacao.getCidade(), solicitacao.getTipoConta());
-        } else {
-            conta = new ContaPoupanca(cliente, solicitacao.getNumeroConta(), solicitacao.getEndereco(), solicitacao.getCidade(), solicitacao.getTipoConta());
-        }
-
-        adicionarConta(conta); // Certifique-se de que este método está acessível
-        solicitacao.setStatus(Status_Solicitacao.APROVADO);
     }
+
+
 
     public void adicionarConta(Conta conta) {
         contas.put(conta.getNumeroConta(), conta);
@@ -167,6 +188,14 @@ public class BancoServico extends Usuario {
     public void criarFuncionario(String nome, LocalDate dataDeNascimento, String telefone, String senha, String cep, String local, String numeroCasa, String bairro, String cidade, String estado, String codigoFuncionario, String cargo) {
         Funcionario novoFuncionario = new Funcionario(nome, dataDeNascimento, telefone, senha, cep, local, numeroCasa, bairro, cidade, estado, codigoFuncionario, cargo, this);
         funcionarios.put(codigoFuncionario, novoFuncionario);
+    }
+
+    // BancoServico.java
+    public Conta getContaPorCliente(Cliente cliente) {
+        return contas.values().stream()
+                .filter(conta -> conta.getCliente().getDocumento().equals(cliente.getDocumento()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

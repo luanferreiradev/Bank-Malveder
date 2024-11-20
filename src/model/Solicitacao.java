@@ -1,3 +1,4 @@
+// Solicitacao.java
 package model;
 
 import model.enums.Status_Solicitacao;
@@ -15,6 +16,8 @@ public class Solicitacao {
     private String estado;
     private String dataNascimento;
     private String numeroCasa;
+    private String nome;
+    private String telefone;
 
     public Solicitacao(int id, String documento, String senha, String tipoConta, String endereco, String numeroCasa, String bairro, String cidade, String estado, String dataNascimento, Status_Solicitacao status) {
         this.id = id;
@@ -126,12 +129,20 @@ public class Solicitacao {
         this.numeroCasa = numeroCasa;
     }
 
-    public boolean isPessoaFisica() {
-        return "PF".equals(tipoConta);
+    public String getNome() {
+        return nome;
     }
 
-    public boolean isPessoaJuridica() {
-        return "PJ".equals(tipoConta);
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     @Override
