@@ -10,6 +10,11 @@ Bem-vindo ao Banco Malvader! Este é um projeto de um sistema bancário desenvol
 - **JDBC (Java Database Connectivity)**: API para conectar e executar consultas em bancos de dados.
 - **MySQL**: Sistema de gerenciamento de banco de dados relacional.
 
+
+## Repositório da SQL
+
+O repositório com o script SQL para criação das tabelas do banco de dados pode ser encontrado [aqui](https://drive.google.com/drive/folders/1FvwPfoxxFtZUYC104MAScFR-12V0k3Ph?usp=sharing).
+
 ## Instalação
 
 Para rodar o projeto em sua máquina, siga os passos abaixo:
