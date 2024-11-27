@@ -11,9 +11,16 @@ Bem-vindo ao Banco Malvader! Este é um projeto de um sistema bancário desenvol
 - **MySQL**: Sistema de gerenciamento de banco de dados relacional.
 
 
-## Repositório da SQL
+## Repositório da SQL e Documentação em geral
 
 O repositório com o script SQL para criação das tabelas do banco de dados pode ser encontrado [aqui](https://drive.google.com/drive/folders/1FvwPfoxxFtZUYC104MAScFR-12V0k3Ph?usp=sharing).
+
+## Diagramas e Programa em .jar para Ser Executável
+
+Comando para executar o programa: 
+ ```java
+   java -jar target/BancoMalvader-1.0-SNAPSHOT-jar-with-dependencies.jar
+ ``
 
 ## Instalação
 
