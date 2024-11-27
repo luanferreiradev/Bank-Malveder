@@ -1,17 +1,11 @@
 package view;
 
-import config.DatabaseConnection;
 import controler.Controler;
-import model.dao.ContaDAO;
-import model.dao.UsuarioDAO;
-import view.ClienteMenu;
-import view.FuncionarioMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Login extends JFrame {

@@ -2,7 +2,6 @@
 package view;
 
 import controler.Controler;
-import model.dao.*;
 import config.DatabaseConnection;
 
 import javax.swing.*;
