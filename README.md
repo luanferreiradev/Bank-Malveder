@@ -20,7 +20,7 @@ O repositório com o script SQL para criação das tabelas do banco de dados pod
 Comando para executar o programa: 
  ```java
    java -jar target/BancoMalvader-1.0-SNAPSHOT-jar-with-dependencies.jar
- ``
+ ```  
 
 ## Instalação
 
